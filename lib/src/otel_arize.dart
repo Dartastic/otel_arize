@@ -2,7 +2,6 @@
 // Copyright 2025-2026 Mindful Software LLC d/b/a Dartastic.io, All rights reserved.
 
 import 'package:dartastic_opentelemetry/dartastic_opentelemetry.dart';
-import 'package:dartastic_opentelemetry_api/dartastic_opentelemetry_api.dart';
 
 import 'otel_arize_suppression.dart';
 
@@ -74,82 +73,112 @@ Future<T> tracedArize<T>({
   final t = tracer ?? OTel.tracerProvider().getTracer('otel_arize');
   final span = t.startSpan('arize $operation', kind: SpanKind.client);
   try {
-    span.setStringAttribute('rpc.system', 'arize');
-    span.setStringAttribute('rpc.method', operation);
+    span.addAttributes(
+        OTel.attributes([OTel.attributeString('rpc.system', 'arize')]));
+    span.addAttributes(
+        OTel.attributes([OTel.attributeString('rpc.method', operation)]));
     final r = await invoke();
     final res = r.result;
     if (res != null) {
       if (res.spaceId != null) {
-        span.setStringAttribute('arize.space.id', res.spaceId!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeString('arize.space.id', res.spaceId!)]));
       }
       if (res.modelId != null) {
-        span.setStringAttribute('arize.model.id', res.modelId!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeString('arize.model.id', res.modelId!)]));
       }
       if (res.modelVersion != null) {
-        span.setStringAttribute('arize.model.version', res.modelVersion!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeString('arize.model.version', res.modelVersion!)]));
       }
       if (res.modelType != null) {
-        span.setStringAttribute('arize.model.type', res.modelType!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeString('arize.model.type', res.modelType!)]));
       }
       if (res.environment != null) {
-        span.setStringAttribute('arize.environment', res.environment!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeString('arize.environment', res.environment!)]));
       }
       if (res.predictionId != null) {
-        span.setStringAttribute('arize.prediction.id', res.predictionId!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeString('arize.prediction.id', res.predictionId!)]));
       }
       if (res.records != null) {
-        span.setIntAttribute('arize.records', res.records!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeInt('arize.records', res.records!)]));
       }
       if (res.featuresCount != null) {
-        span.setIntAttribute('arize.features.count', res.featuresCount!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeInt('arize.features.count', res.featuresCount!)]));
       }
       if (res.embeddingFeaturesCount != null) {
-        span.setIntAttribute(
-            'arize.embedding_features.count', res.embeddingFeaturesCount!);
+        span.addAttributes(OTel.attributes([
+          OTel.attributeInt(
+              'arize.embedding_features.count', res.embeddingFeaturesCount!)
+        ]));
       }
       if (res.actualLabel != null) {
-        span.setStringAttribute('arize.actual.label', res.actualLabel!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeString('arize.actual.label', res.actualLabel!)]));
       }
       if (res.predictionLabel != null) {
-        span.setStringAttribute('arize.prediction.label', res.predictionLabel!);
+        span.addAttributes(OTel.attributes([
+          OTel.attributeString('arize.prediction.label', res.predictionLabel!)
+        ]));
       }
       if (res.predictionScore != null) {
-        span.setDoubleAttribute('arize.prediction.score', res.predictionScore!);
+        span.addAttributes(OTel.attributes([
+          OTel.attributeDouble('arize.prediction.score', res.predictionScore!)
+        ]));
       }
       if (res.driftMetric != null) {
-        span.setStringAttribute('arize.drift.metric', res.driftMetric!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeString('arize.drift.metric', res.driftMetric!)]));
       }
       if (res.driftValue != null) {
-        span.setDoubleAttribute('arize.drift.value', res.driftValue!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeDouble('arize.drift.value', res.driftValue!)]));
       }
       if (res.dataQualityMetric != null) {
-        span.setStringAttribute(
-            'arize.data_quality.metric', res.dataQualityMetric!);
+        span.addAttributes(OTel.attributes([
+          OTel.attributeString(
+              'arize.data_quality.metric', res.dataQualityMetric!)
+        ]));
       }
       if (res.dataQualityValue != null) {
-        span.setDoubleAttribute(
-            'arize.data_quality.value', res.dataQualityValue!);
+        span.addAttributes(OTel.attributes([
+          OTel.attributeDouble(
+              'arize.data_quality.value', res.dataQualityValue!)
+        ]));
       }
       if (res.evalName != null) {
-        span.setStringAttribute('arize.eval.name', res.evalName!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeString('arize.eval.name', res.evalName!)]));
       }
       if (res.evalScore != null) {
-        span.setDoubleAttribute('arize.eval.score', res.evalScore!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeDouble('arize.eval.score', res.evalScore!)]));
       }
       if (res.spanKind != null) {
-        span.setStringAttribute('arize.span.kind', res.spanKind!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeString('arize.span.kind', res.spanKind!)]));
       }
       if (res.statusCode != null) {
-        span.setIntAttribute('http.response.status_code', res.statusCode!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeInt('http.response.status_code', res.statusCode!)]));
       }
       if (res.errorCode != null) {
-        span.setStringAttribute('arize.error.code', res.errorCode!);
+        span.addAttributes(OTel.attributes(
+            [OTel.attributeString('arize.error.code', res.errorCode!)]));
       }
       final fail = res.errorCode != null ||
           (res.statusCode != null && res.statusCode! >= 400);
       if (fail) {
-        span.setStringAttribute(
-            ErrorResource.errorType.key, res.errorCode ?? 'arize.error');
+        span.addAttributes(OTel.attributes([
+          OTel.attributeString(
+              ErrorResource.errorType.key, res.errorCode ?? 'arize.error')
+        ]));
         span.setStatus(SpanStatusCode.Error, res.errorMessage);
       }
     }
