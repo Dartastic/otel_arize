@@ -6,6 +6,7 @@ import 'package:dartastic_opentelemetry_api/dartastic_opentelemetry_api.dart';
 import 'otel_arize_suppression.dart';
 
 class ArizeResult {
+  /// Creates a result.
   const ArizeResult({
     this.spaceId,
     this.modelId,
@@ -55,8 +56,13 @@ class ArizeResult {
   final String? errorMessage;
 }
 
+/// What a traced call returned: the value for the caller plus fields
+/// recorded on the span.
 class ArizeCallResult<T> {
+  /// Creates a call result.
   const ArizeCallResult({required this.value, this.result});
+
+  /// The value returned to the caller.
   final T value;
   final ArizeResult? result;
 }
